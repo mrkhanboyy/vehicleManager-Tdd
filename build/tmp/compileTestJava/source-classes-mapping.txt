@@ -1,0 +1,4 @@
+com/vehicleManager/di/component/DaggerVehicleAppTestComponent.java
+ com.vehicleManager.di.component.DaggerVehicleAppTestComponent
+ com.vehicleManager.di.component.DaggerVehicleAppTestComponent$1
+ com.vehicleManager.di.component.DaggerVehicleAppTestComponent$Builder
