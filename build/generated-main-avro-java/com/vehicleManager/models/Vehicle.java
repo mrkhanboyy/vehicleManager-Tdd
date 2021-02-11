@@ -10,14 +10,14 @@ import org.apache.avro.specific.SpecificData;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Vehicle extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2948598949828351750L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Vehicle\",\"namespace\":\"com.vehicleManager.models\",\"fields\":[{\"name\":\"uuid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"registrationNumber\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"driverName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"bodyType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"chassisType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"carryingCapacity\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
+  private static final long serialVersionUID = -5601437151679916292L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Vehicle\",\"namespace\":\"com.vehicleManager.models\",\"fields\":[{\"name\":\"uuid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"registrationNumber\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"driverName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"bodyType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"chassisType\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"}]},{\"name\":\"carryingCapacity\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String uuid;
-  @Deprecated public java.lang.String registrationNumber;
+  @Deprecated public java.lang.Object registrationNumber;
   @Deprecated public java.lang.String driverName;
   @Deprecated public java.lang.String bodyType;
-  @Deprecated public java.lang.String chassisType;
+  @Deprecated public java.lang.Object chassisType;
   @Deprecated public java.lang.String carryingCapacity;
 
   /**
@@ -36,7 +36,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param chassisType The new value for chassisType
    * @param carryingCapacity The new value for carryingCapacity
    */
-  public Vehicle(java.lang.String uuid, java.lang.String registrationNumber, java.lang.String driverName, java.lang.String bodyType, java.lang.String chassisType, java.lang.String carryingCapacity) {
+  public Vehicle(java.lang.String uuid, java.lang.Object registrationNumber, java.lang.String driverName, java.lang.String bodyType, java.lang.Object chassisType, java.lang.String carryingCapacity) {
     this.uuid = uuid;
     this.registrationNumber = registrationNumber;
     this.driverName = driverName;
@@ -64,10 +64,10 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: uuid = (java.lang.String)value$; break;
-    case 1: registrationNumber = (java.lang.String)value$; break;
+    case 1: registrationNumber = (java.lang.Object)value$; break;
     case 2: driverName = (java.lang.String)value$; break;
     case 3: bodyType = (java.lang.String)value$; break;
-    case 4: chassisType = (java.lang.String)value$; break;
+    case 4: chassisType = (java.lang.Object)value$; break;
     case 5: carryingCapacity = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
@@ -93,7 +93,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'registrationNumber' field.
    * @return The value of the 'registrationNumber' field.
    */
-  public java.lang.String getRegistrationNumber() {
+  public java.lang.Object getRegistrationNumber() {
     return registrationNumber;
   }
 
@@ -101,7 +101,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'registrationNumber' field.
    * @param value the value to set.
    */
-  public void setRegistrationNumber(java.lang.String value) {
+  public void setRegistrationNumber(java.lang.Object value) {
     this.registrationNumber = value;
   }
 
@@ -141,7 +141,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'chassisType' field.
    * @return The value of the 'chassisType' field.
    */
-  public java.lang.String getChassisType() {
+  public java.lang.Object getChassisType() {
     return chassisType;
   }
 
@@ -149,7 +149,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'chassisType' field.
    * @param value the value to set.
    */
-  public void setChassisType(java.lang.String value) {
+  public void setChassisType(java.lang.Object value) {
     this.chassisType = value;
   }
 
@@ -202,10 +202,10 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
     implements org.apache.avro.data.RecordBuilder<Vehicle> {
 
     private java.lang.String uuid;
-    private java.lang.String registrationNumber;
+    private java.lang.Object registrationNumber;
     private java.lang.String driverName;
     private java.lang.String bodyType;
-    private java.lang.String chassisType;
+    private java.lang.Object chassisType;
     private java.lang.String carryingCapacity;
 
     /** Creates a new Builder */
@@ -320,7 +320,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
       * Gets the value of the 'registrationNumber' field.
       * @return The value.
       */
-    public java.lang.String getRegistrationNumber() {
+    public java.lang.Object getRegistrationNumber() {
       return registrationNumber;
     }
 
@@ -329,7 +329,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'registrationNumber'.
       * @return This builder.
       */
-    public com.vehicleManager.models.Vehicle.Builder setRegistrationNumber(java.lang.String value) {
+    public com.vehicleManager.models.Vehicle.Builder setRegistrationNumber(java.lang.Object value) {
       validate(fields()[1], value);
       this.registrationNumber = value;
       fieldSetFlags()[1] = true;
@@ -437,7 +437,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
       * Gets the value of the 'chassisType' field.
       * @return The value.
       */
-    public java.lang.String getChassisType() {
+    public java.lang.Object getChassisType() {
       return chassisType;
     }
 
@@ -446,7 +446,7 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'chassisType'.
       * @return This builder.
       */
-    public com.vehicleManager.models.Vehicle.Builder setChassisType(java.lang.String value) {
+    public com.vehicleManager.models.Vehicle.Builder setChassisType(java.lang.Object value) {
       validate(fields()[4], value);
       this.chassisType = value;
       fieldSetFlags()[4] = true;
@@ -516,10 +516,10 @@ public class Vehicle extends org.apache.avro.specific.SpecificRecordBase impleme
       try {
         Vehicle record = new Vehicle();
         record.uuid = fieldSetFlags()[0] ? this.uuid : (java.lang.String) defaultValue(fields()[0]);
-        record.registrationNumber = fieldSetFlags()[1] ? this.registrationNumber : (java.lang.String) defaultValue(fields()[1]);
+        record.registrationNumber = fieldSetFlags()[1] ? this.registrationNumber : (java.lang.Object) defaultValue(fields()[1]);
         record.driverName = fieldSetFlags()[2] ? this.driverName : (java.lang.String) defaultValue(fields()[2]);
         record.bodyType = fieldSetFlags()[3] ? this.bodyType : (java.lang.String) defaultValue(fields()[3]);
-        record.chassisType = fieldSetFlags()[4] ? this.chassisType : (java.lang.String) defaultValue(fields()[4]);
+        record.chassisType = fieldSetFlags()[4] ? this.chassisType : (java.lang.Object) defaultValue(fields()[4]);
         record.carryingCapacity = fieldSetFlags()[5] ? this.carryingCapacity : (java.lang.String) defaultValue(fields()[5]);
         return record;
       } catch (Exception e) {

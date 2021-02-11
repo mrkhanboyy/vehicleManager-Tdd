@@ -7,10 +7,6 @@ import com.vehicleManager.di.modules.DatabaseModule_ProvidesMongoDatabaseFactory
 import com.vehicleManager.di.modules.HttpModule;
 import com.vehicleManager.di.modules.MapperModule;
 import com.vehicleManager.di.modules.MapperModule_ProvidesObjectMapperFactory;
-import com.vehicleManager.di.modules.RepositoryModule;
-import com.vehicleManager.di.modules.RepositoryModule_VehicleRepoFactory;
-import com.vehicleManager.di.modules.ServiceModule;
-import com.vehicleManager.di.modules.ServiceModule_ServiceProviderFactory;
 import com.vehicleManager.repository.VehicleRepository;
 import com.vehicleManager.service.VehicleService;
 import dagger.internal.Preconditions;
@@ -27,18 +23,11 @@ import javax.annotation.Generated;
 public final class DaggerVehicleAppTestComponent implements VehicleAppTestComponent {
   private final DatabaseModule databaseModule;
 
-  private final RepositoryModule repositoryModule;
-
-  private final ServiceModule serviceModule;
-
   private final MapperModule mapperModule;
 
   private DaggerVehicleAppTestComponent(MapperModule mapperModuleParam,
-      RepositoryModule repositoryModuleParam, ServiceModule serviceModuleParam,
       DatabaseModule databaseModuleParam) {
     this.databaseModule = databaseModuleParam;
-    this.repositoryModule = repositoryModuleParam;
-    this.serviceModule = serviceModuleParam;
     this.mapperModule = mapperModuleParam;
   }
 
@@ -52,12 +41,12 @@ public final class DaggerVehicleAppTestComponent implements VehicleAppTestCompon
 
   @Override
   public VehicleRepository vehicleRepository() {
-    return RepositoryModule_VehicleRepoFactory.vehicleRepo(repositoryModule, DatabaseModule_ProvidesMongoDatabaseFactory.providesMongoDatabase(databaseModule));
+    return new VehicleRepository(DatabaseModule_ProvidesMongoDatabaseFactory.providesMongoDatabase(databaseModule), MapperModule_ProvidesObjectMapperFactory.providesObjectMapper(mapperModule));
   }
 
   @Override
   public VehicleService vehicleService() {
-    return ServiceModule_ServiceProviderFactory.serviceProvider(serviceModule, vehicleRepository());
+    return new VehicleService(vehicleRepository());
   }
 
   @Override
@@ -67,10 +56,6 @@ public final class DaggerVehicleAppTestComponent implements VehicleAppTestCompon
 
   public static final class Builder {
     private MapperModule mapperModule;
-
-    private RepositoryModule repositoryModule;
-
-    private ServiceModule serviceModule;
 
     private DatabaseModule databaseModule;
 
@@ -100,16 +85,6 @@ public final class DaggerVehicleAppTestComponent implements VehicleAppTestCompon
       return this;
     }
 
-    public Builder repositoryModule(RepositoryModule repositoryModule) {
-      this.repositoryModule = Preconditions.checkNotNull(repositoryModule);
-      return this;
-    }
-
-    public Builder serviceModule(ServiceModule serviceModule) {
-      this.serviceModule = Preconditions.checkNotNull(serviceModule);
-      return this;
-    }
-
     public Builder databaseModule(DatabaseModule databaseModule) {
       this.databaseModule = Preconditions.checkNotNull(databaseModule);
       return this;
@@ -119,16 +94,10 @@ public final class DaggerVehicleAppTestComponent implements VehicleAppTestCompon
       if (mapperModule == null) {
         this.mapperModule = new MapperModule();
       }
-      if (repositoryModule == null) {
-        this.repositoryModule = new RepositoryModule();
-      }
-      if (serviceModule == null) {
-        this.serviceModule = new ServiceModule();
-      }
       if (databaseModule == null) {
         this.databaseModule = new DatabaseModule();
       }
-      return new DaggerVehicleAppTestComponent(mapperModule, repositoryModule, serviceModule, databaseModule);
+      return new DaggerVehicleAppTestComponent(mapperModule, databaseModule);
     }
   }
 }

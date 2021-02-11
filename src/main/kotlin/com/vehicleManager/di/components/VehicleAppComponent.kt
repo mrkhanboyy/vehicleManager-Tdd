@@ -9,8 +9,8 @@ import org.glassfish.grizzly.http.server.HttpServer
         MapperModule::class,
         ConfigModule::class,
         HttpModule::class,
-        RepositoryModule::class,
-        ServiceModule::class,
+//        RepositoryModule::class,
+//        ServiceModule::class,
         DatabaseModule::class
     ]
 )

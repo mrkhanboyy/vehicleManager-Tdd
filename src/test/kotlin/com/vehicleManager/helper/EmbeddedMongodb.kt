@@ -1,4 +1,4 @@
-package com.vehicleManager.helper
+package com.fretron.vehicleManager.utils
 
 import de.flapdoodle.embed.mongo.MongodExecutable
 import de.flapdoodle.embed.mongo.MongodProcess
@@ -9,9 +9,9 @@ import de.flapdoodle.embed.mongo.distribution.Version
 import de.flapdoodle.embed.process.runtime.Network
 import java.io.IOException
 
-class EmbeddedMongodb {
+class EmbeddedMongoDb {
     var port: Int
-//        private set
+        private set
     private var process: MongodProcess? = null
 
     constructor() {

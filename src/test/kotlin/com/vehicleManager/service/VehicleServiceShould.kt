@@ -13,7 +13,7 @@ class VehicleServiceShould {
 
     var component = DaggerVehicleAppTestComponent.builder().build()
     private var vehicleService = VehicleService(component.vehicleRepository())
-    
+    private val uuid:String = "1a1c5fe5-3ee0-453d-8425-5fec44961029"
 
 
     @Test
@@ -31,31 +31,35 @@ class VehicleServiceShould {
         var vehicleReturnedFromRepo = TestData.getVehicle()
         assertTrue(vehicle.getUuid() == vehicleReturnedFromRepo.getUuid())
 
-
     }
 
-//    @Test
-//    fun throws_vehicle_exception_on_invalid_or_null_data(){
-//        var vehicle =TestData.getVehicle()
+    @Test
+    fun throw_vehicle_exception_on_invalid_or_null_data(){
+        var vehicle =TestData.getVehicle()
 
-//        assertThrows(VehicleException::class.java) {
-//            vehicle.setRegistrationNumber("")
-//            vehicleService.validateVehicelData(vehicle)
-//
-//        }
-//
-//        assertThrows(VehicleNotFoundException::class.java){
-//            vehicleService.validateVehicelData(null)
-//        }
-//
-//
-//        vehicle = TestData.getVehicle()
-//        assertThrows(InvalidVehicleDataException::class.java){
-//            vehicle.setChassisType("")
-//            vehicleService.validateVehicelData(vehicle)
-//        }
-//
-//    }
+        assertThrows(VehicleException::class.java) {
+            vehicle.setRegistrationNumber("")
+            vehicleService.createNewVehicle(vehicle)
+
+        }
+
+        vehicle = TestData.getVehicle()
+        assertThrows(InvalidVehicleDataException::class.java){
+            vehicle.setChassisType("")
+            vehicleService.createNewVehicle(vehicle)
+        }
+    }
+
+    @Test
+    fun get_vehicle_by_uuid(){
+
+        assertThrows(InvalidVehicleDataException::class.java){
+            vehicleService.getVehicleById(uuid)
+        }
+        val vehicle = TestData.getVehicle()
+
+
+    }
 
 
 

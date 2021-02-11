@@ -10,14 +10,14 @@ import javax.inject.Inject
 class VehicleService @Inject constructor(private val vehicleRepo: VehicleRepository) {
 
 
+    @Throws(VehicleException::class)
     fun createNewVehicle(vehicle: Vehicle): Vehicle? {
         validateVehicelData(vehicle)
         return vehicleRepo.createNewVehicle(vehicle)
     }
 
 
-    @Throws(VehicleException::class)
-    fun validateVehicelData(vehicle: Vehicle?){
+    private fun validateVehicelData(vehicle: Vehicle){
 
         if(vehicle == null){
             throw VehicleNotFoundException("Vehcle cannot be null")
@@ -28,5 +28,11 @@ class VehicleService @Inject constructor(private val vehicleRepo: VehicleReposit
         }
 
     }
+
+    @Throws(VehicleNotFoundException::class)
+    fun getVehicleById(id: String): Vehicle? {
+        return vehicleRepo.getVehicleById(id)
+    }
+
 
 }

@@ -13,13 +13,7 @@
     },
     {
       "name": "registrationNumber",
-      "type": [
-        "null",
-        {
-          "type": "string",
-          "avro.java.string": "String"
-        }
-      ]
+      "type": ["string"]
     },
     {
       "name": "driverName",
@@ -39,11 +33,7 @@
     },
     {
       "name": "chassisType",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
+      "type": ["string"]
     },
     {
       "name": "carryingCapacity",
@@ -53,5 +43,9 @@
       ],
       "default": null
     }
+//    {
+//      "name": "testKey",
+//      "type": ["string"]
+//    }
   ]
 }

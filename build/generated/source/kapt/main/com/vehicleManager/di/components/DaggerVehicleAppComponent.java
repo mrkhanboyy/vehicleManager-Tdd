@@ -9,10 +9,6 @@ import com.vehicleManager.di.modules.HttpModule_ProvideResourceFactory;
 import com.vehicleManager.di.modules.HttpModule_ServerFactory;
 import com.vehicleManager.di.modules.MapperModule;
 import com.vehicleManager.di.modules.MapperModule_ProvidesObjectMapperFactory;
-import com.vehicleManager.di.modules.RepositoryModule;
-import com.vehicleManager.di.modules.RepositoryModule_VehicleRepoFactory;
-import com.vehicleManager.di.modules.ServiceModule;
-import com.vehicleManager.di.modules.ServiceModule_ServiceProviderFactory;
 import com.vehicleManager.repository.VehicleRepository;
 import com.vehicleManager.resource.VehicleResource;
 import com.vehicleManager.service.VehicleService;
@@ -34,21 +30,14 @@ public final class DaggerVehicleAppComponent implements VehicleAppComponent {
 
   private final DatabaseModule databaseModule;
 
-  private final RepositoryModule repositoryModule;
-
-  private final ServiceModule serviceModule;
-
   private final MapperModule mapperModule;
 
   private final HttpModule httpModule;
 
   private DaggerVehicleAppComponent(MapperModule mapperModuleParam, ConfigModule configModuleParam,
-      HttpModule httpModuleParam, RepositoryModule repositoryModuleParam,
-      ServiceModule serviceModuleParam, DatabaseModule databaseModuleParam) {
+      HttpModule httpModuleParam, DatabaseModule databaseModuleParam) {
     this.configModule = configModuleParam;
     this.databaseModule = databaseModuleParam;
-    this.repositoryModule = repositoryModuleParam;
-    this.serviceModule = serviceModuleParam;
     this.mapperModule = mapperModuleParam;
     this.httpModule = httpModuleParam;
   }
@@ -62,11 +51,11 @@ public final class DaggerVehicleAppComponent implements VehicleAppComponent {
   }
 
   private VehicleRepository vehicleRepository() {
-    return RepositoryModule_VehicleRepoFactory.vehicleRepo(repositoryModule, DatabaseModule_ProvidesMongoDatabaseFactory.providesMongoDatabase(databaseModule));
+    return new VehicleRepository(DatabaseModule_ProvidesMongoDatabaseFactory.providesMongoDatabase(databaseModule), MapperModule_ProvidesObjectMapperFactory.providesObjectMapper(mapperModule));
   }
 
   private VehicleService vehicleService() {
-    return ServiceModule_ServiceProviderFactory.serviceProvider(serviceModule, vehicleRepository());
+    return new VehicleService(vehicleRepository());
   }
 
   private VehicleResource vehicleResource() {
@@ -89,10 +78,6 @@ public final class DaggerVehicleAppComponent implements VehicleAppComponent {
 
     private HttpModule httpModule;
 
-    private RepositoryModule repositoryModule;
-
-    private ServiceModule serviceModule;
-
     private DatabaseModule databaseModule;
 
     private Builder() {
@@ -113,16 +98,6 @@ public final class DaggerVehicleAppComponent implements VehicleAppComponent {
       return this;
     }
 
-    public Builder repositoryModule(RepositoryModule repositoryModule) {
-      this.repositoryModule = Preconditions.checkNotNull(repositoryModule);
-      return this;
-    }
-
-    public Builder serviceModule(ServiceModule serviceModule) {
-      this.serviceModule = Preconditions.checkNotNull(serviceModule);
-      return this;
-    }
-
     public Builder databaseModule(DatabaseModule databaseModule) {
       this.databaseModule = Preconditions.checkNotNull(databaseModule);
       return this;
@@ -138,16 +113,10 @@ public final class DaggerVehicleAppComponent implements VehicleAppComponent {
       if (httpModule == null) {
         this.httpModule = new HttpModule();
       }
-      if (repositoryModule == null) {
-        this.repositoryModule = new RepositoryModule();
-      }
-      if (serviceModule == null) {
-        this.serviceModule = new ServiceModule();
-      }
       if (databaseModule == null) {
         this.databaseModule = new DatabaseModule();
       }
-      return new DaggerVehicleAppComponent(mapperModule, configModule, httpModule, repositoryModule, serviceModule, databaseModule);
+      return new DaggerVehicleAppComponent(mapperModule, configModule, httpModule, databaseModule);
     }
   }
 }
