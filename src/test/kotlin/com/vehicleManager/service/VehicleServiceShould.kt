@@ -28,8 +28,10 @@ class VehicleServiceShould {
         assertNotNull(vehicle.getChassisType())
         assertFalse(vehicle.getChassisType().equals(""))
 
-        var vehicleReturnedFromRepo = TestData.getVehicle()
-        assertTrue(vehicle.getUuid() == vehicleReturnedFromRepo.getUuid())
+        var vehicleReturnedFromRepo = vehicleService.createNewVehicle(vehicle)
+        if (vehicleReturnedFromRepo != null) {
+            assertTrue(vehicle.getUuid() == vehicleReturnedFromRepo.getUuid())
+        }
 
     }
 
@@ -40,7 +42,6 @@ class VehicleServiceShould {
         assertThrows(VehicleException::class.java) {
             vehicle.setRegistrationNumber("")
             vehicleService.createNewVehicle(vehicle)
-
         }
 
         vehicle = TestData.getVehicle()
@@ -53,10 +54,11 @@ class VehicleServiceShould {
     @Test
     fun get_vehicle_by_uuid(){
 
-        assertThrows(InvalidVehicleDataException::class.java){
+        assertThrows(VehicleNotFoundException::class.java){
             vehicleService.getVehicleById(uuid)
         }
-        val vehicle = TestData.getVehicle()
+
+
 
 
     }
