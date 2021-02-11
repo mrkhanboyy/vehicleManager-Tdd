@@ -28,7 +28,9 @@ class VehicleServiceShould {
         vehicleRepository = mock(VehicleRepository::class.java)
         whenever(vehicleRepository.getVehicleById(any())).thenReturn(TestData.getVehicle())
         whenever(vehicleRepository.createNewVehicle(any())).thenReturn(TestData.getVehicle())
-
+        whenever(vehicleRepository.getAllVehicles()).thenReturn(listOf(TestData.getVehicle()))
+        whenever(vehicleRepository.deleteVehicleById(any())).thenReturn(TestData.getVehicle())
+        whenever(vehicleRepository.updateVehicle(any())).thenReturn(TestData.getUpdatedVehicle())
     }
 
     @Test
@@ -79,12 +81,34 @@ class VehicleServiceShould {
 
     }
 
+    @Test
+    fun return_list_of_all_vehicles(){
+        var vehiclesListFromRepository:List<Vehicle>? = vehicleRepository.getAllVehicles()
+        print(vehiclesListFromRepository)
+        assertNotNull(vehiclesListFromRepository)
+        vehiclesListFromRepository = null
+        assertNull(vehiclesListFromRepository)
+    }
+
+    @Test
+    fun return_vehicle_after_deletion(){
+
+        var vehicle_after_deletion: Vehicle? = vehicleRepository.deleteVehicleById(uuid)
+        assertTrue(vehicle_after_deletion?.getUuid() == uuid)
+        println("uuid after deletion --> ${vehicle_after_deletion?.getUuid()}")
+        whenever(vehicleRepository.deleteVehicleById(any())).thenReturn(null)
+        assertNull(vehicleRepository.deleteVehicleById(""))
+
+    }
+
+    @Test
+    fun return_updated_vehicle_after_update_or_throw(){
+
+        var vehicle = TestData.getUpdatedVehicle()
+        var updatedVehicle = vehicleRepository.updateVehicle(vehicle)
+        assertFalse(vehicle.getDriverName() != updatedVehicle.getDriverName())
 
 
-
-
-
-
-
+    }
 
 }

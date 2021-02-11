@@ -36,7 +36,8 @@ class VehicleResourceShould : JerseyTest() {
     fun before(){
         whenever(vehicleService.createNewVehicle(any())).thenReturn(TestData.getVehicle())
         whenever(vehicleService.getVehicleById(any())).thenReturn(TestData.getVehicle())
-
+        whenever(vehicleService.getALlVehicles()).thenReturn(listOf(TestData.getVehicle()))
+        whenever(vehicleService.deleteVehicle(any())).thenReturn(TestData.getVehicle())
     }
 
     @Test
@@ -65,10 +66,32 @@ class VehicleResourceShould : JerseyTest() {
     }
 
     @Test
-    fun return_list_of_all_vehicles(){
+    fun return_200_after_getting_list_of_all_vehicles(){
 
         val response = target("$baseUrl/vehicles").request().get()
-        print(response)
+        assertTrue(response.status == 200)
+        print("response status --->  ${response.status}")
+        assertNotNull(response)
+    }
+
+    @Test
+    fun return_200_after_delete_vehicle(){
+
+        val response = target("$baseUrl/vehicle/$uuid").request().delete()
+        assertTrue(response.status == 200)
+        assertNotNull(response.entity)
+        val responseJson = JSONObject(response.readEntity(String::class.java))
+        assertNotNull(responseJson)
+        println("response  uuid : ${responseJson.get("uuid").toString()}")
+
+    }
+
+    @Test
+    fun return_200_after_updating_vehicle(){
+        var vehicle = TestData.updateVehicleRequest()
+        val response = target("$baseUrl/vehicle").request().put(Entity.entity(vehicle, MediaType.APPLICATION_JSON))
+        assertTrue(response.status == 200)
+
 
     }
 

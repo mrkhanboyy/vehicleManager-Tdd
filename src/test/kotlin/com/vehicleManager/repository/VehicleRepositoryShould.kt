@@ -15,6 +15,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 import org.mockito.Mockito.mock
+import java.lang.Exception
 import java.util.*
 
 class VehicleRepositoryShould {
@@ -83,8 +84,48 @@ class VehicleRepositoryShould {
         }
     }
 
+    @Test
+    fun return_list_of_all_vehicle(){
 
+        var vehicles_list_size_before_adding_any = vehicleRepository.getAllVehicles().size
+        assertTrue(vehicles_list_size_before_adding_any == 0)
+        println("vehicles_list_size_before_adding_any --> $vehicles_list_size_before_adding_any")
 
+        vehicleRepository.createNewVehicle(TestData.getVehicle())
+        var vehicles_list_size_after_adding_vehicle  = vehicleRepository.getAllVehicles().size
+        assertTrue(vehicles_list_size_after_adding_vehicle == 1)
+        println("vehicles_list_size_after_adding_1_vehicle --> $vehicles_list_size_after_adding_vehicle")
+    }
 
+    @Test
+    fun return_vehicle_after_deletion_successfull(){
+        assertThrows(VehicleNotFoundException::class.java) {
+            vehicleRepository.deleteVehicleById(uuid)
+        }
+
+        createNewVehicle(TestData.getVehicle())
+        val deleteVehicleById = vehicleRepository.deleteVehicleById(uuid)
+        println("deleted vehicle uuid --> ${deleteVehicleById?.getUuid()}")
+        assertTrue(deleteVehicleById?.getUuid() == uuid)
+
+    }
+
+    @Test
+    fun return_vehicle_after_update(){
+        val oldVehicle = TestData.getVehicle()
+        val updatedVehicle = TestData.getUpdatedVehicle()
+
+        assertTrue(oldVehicle.getUuid() == updatedVehicle.getUuid())
+        assertTrue(oldVehicle.getDriverName() != updatedVehicle.getDriverName())
+
+        assertThrows(VehicleNotFoundException::class.java) {
+            vehicleRepository.updateVehicle(oldVehicle)
+        }
+
+        createNewVehicle(oldVehicle)
+        val vehicleAfterUpdate = vehicleRepository.updateVehicle(updatedVehicle)
+        assert(vehicleAfterUpdate.getDriverName() == oldVehicle.getDriverName())
+
+        }
 
 }

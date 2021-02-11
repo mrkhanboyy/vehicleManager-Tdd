@@ -33,6 +33,31 @@ private val objectMapper: ObjectMapper) {
     }
 
 
+    @GET
+    @Path("/vehicles")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun getAllVehicles(): Response{
+        var vehicles = vehicleService.getALlVehicles()
+        return Response.ok(vehicles.toString()).build()
+    }
+
+    @DELETE
+    @Path("/vehicle/{uuid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun deleteVehicle(@PathParam("uuid") uuid: String): Response{
+        val vehicle: Vehicle? = vehicleService.deleteVehicle(uuid)
+        return Response.ok(vehicle.toString()).build()
+    }
+
+
+    @PUT
+    @Path("/vehicle")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun updateVehicle(request: String): Response{
+        val vehicle: Vehicle =  vehicleService.updateVehicle(objectMapper.readValue(request,Vehicle::class.java))
+        return Response.ok().build()
+    }
 
 
 

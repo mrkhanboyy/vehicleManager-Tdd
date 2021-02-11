@@ -26,5 +26,22 @@ object TestData {
         return null
     }
 
+    fun updateVehicleRequest(): String {
+        return "{\n" +
+                "\"uuid\":\"1a1c5fe5-3ee0-453d-8425-5fec44961029\",\n" +
+                "\"registrationNumber\":\"11\",\n" +
+                "\"driverName\":\"updated name\",\n" +
+                "\"carryingCapacity\":\"updated capacity\",\n" +
+                "\"bodyType\":\"Type-1\",\n" +
+                "\"chassisType\":\"Type-2\"\n" +
+                "}"
+
+    }
+    fun getUpdatedVehicle(): Vehicle {
+        return objectMapper.readValue(updateVehicleRequest(), Vehicle::class.java)
+    }
+
+
+
 
 }

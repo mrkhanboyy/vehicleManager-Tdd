@@ -35,4 +35,20 @@ class VehicleService @Inject constructor(private val vehicleRepo: VehicleReposit
     }
 
 
+    fun getALlVehicles(): List<Vehicle> {
+        return vehicleRepo.getAllVehicles()
+    }
+
+    @Throws(VehicleNotFoundException::class)
+    fun deleteVehicle(uuid: String): Vehicle? {
+        return vehicleRepo.deleteVehicleById(uuid)
+    }
+
+
+    fun updateVehicle(vehicle: Vehicle?): Vehicle {
+        return vehicleRepo.updateVehicle(vehicle)
+
+    }
+
+
 }
