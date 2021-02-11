@@ -1,20 +1,35 @@
 package com.vehicleManager.service
 
 import com.mongodb.internal.connection.tlschannel.util.Util.assertTrue
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.whenever
 import com.vehicleManager.di.component.DaggerVehicleAppTestComponent
 import com.vehicleManager.exception.vehicleExceptions.InvalidVehicleDataException
 import com.vehicleManager.exception.vehicleExceptions.VehicleException
 import com.vehicleManager.exception.vehicleExceptions.VehicleNotFoundException
 import com.vehicleManager.helper.TestData
+import com.vehicleManager.models.Vehicle
+import com.vehicleManager.repository.VehicleRepository
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.mock
 
 class VehicleServiceShould {
 
-    var component = DaggerVehicleAppTestComponent.builder().build()
-    private var vehicleService = VehicleService(component.vehicleRepository())
+    private var component = DaggerVehicleAppTestComponent.builder().build()
+    private lateinit var  vehicleService: VehicleService
+    private lateinit var vehicleRepository: VehicleRepository
     private val uuid:String = "1a1c5fe5-3ee0-453d-8425-5fec44961029"
 
+    @Before
+    fun before(){
+        vehicleService = component.vehicleService()
+        vehicleRepository = mock(VehicleRepository::class.java)
+        whenever(vehicleRepository.getVehicleById(any())).thenReturn(TestData.getVehicle())
+        whenever(vehicleRepository.createNewVehicle(any())).thenReturn(TestData.getVehicle())
+
+    }
 
     @Test
     fun createNewVehicleTest(){
@@ -28,7 +43,9 @@ class VehicleServiceShould {
         assertNotNull(vehicle.getChassisType())
         assertFalse(vehicle.getChassisType().equals(""))
 
-        var vehicleReturnedFromRepo = vehicleService.createNewVehicle(vehicle)
+
+        var vehicleReturnedFromRepo = vehicleRepository.createNewVehicle(vehicle)
+        assertTrue(vehicle.getUuid() == vehicleReturnedFromRepo.getUuid())
         if (vehicleReturnedFromRepo != null) {
             assertTrue(vehicle.getUuid() == vehicleReturnedFromRepo.getUuid())
         }
@@ -54,12 +71,11 @@ class VehicleServiceShould {
     @Test
     fun get_vehicle_by_uuid(){
 
-        assertThrows(VehicleNotFoundException::class.java){
-            vehicleService.getVehicleById(uuid)
-        }
-
-
-
+        var vehicleFromRepository = vehicleRepository.getVehicleById(uuid)
+        assertNotNull(vehicleFromRepository)
+        var vehicle = TestData.getVehicle()
+        assertTrue(vehicle.getUuid().equals(vehicleFromRepository?.getUuid()))
+        println("vehicle uuid : ${vehicle.getUuid()}")
 
     }
 

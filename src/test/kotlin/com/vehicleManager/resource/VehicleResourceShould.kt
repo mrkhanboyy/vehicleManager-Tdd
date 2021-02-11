@@ -1,21 +1,18 @@
 package com.vehicleManager.resource
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.mongodb.client.MongoDatabase
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.vehicleManager.di.component.DaggerVehicleAppTestComponent
 import com.vehicleManager.helper.TestData
-import com.vehicleManager.models.Vehicle
 import com.vehicleManager.service.VehicleService
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.test.JerseyTest
 import org.json.JSONObject
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import java.lang.Exception
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.Application
@@ -25,11 +22,21 @@ class VehicleResourceShould : JerseyTest() {
 
     private val baseUrl: String = "vehicle/v1"
     private val uuid = "1a1c5fe5-3ee0-453d-8425-5fec44961029"
+    private lateinit var vehicleService: VehicleService
 
 
     override fun configure(): Application {
+        vehicleService = mock(VehicleService::class.java)
+
         val component = DaggerVehicleAppTestComponent.builder().build()
-        return ResourceConfig().register(VehicleResource(component.vehicleService(), component.objectMapper()))
+        return ResourceConfig().register(VehicleResource(vehicleService, component.objectMapper()))
+    }
+
+    @Before
+    fun before(){
+        whenever(vehicleService.createNewVehicle(any())).thenReturn(TestData.getVehicle())
+        whenever(vehicleService.getVehicleById(any())).thenReturn(TestData.getVehicle())
+
     }
 
     @Test
@@ -43,6 +50,7 @@ class VehicleResourceShould : JerseyTest() {
         print(responseJson)
         var uuid = responseJson.get("uuid").toString()
         println("response uuid check : $uuid")
+
     }
 
     @Test
@@ -50,9 +58,17 @@ class VehicleResourceShould : JerseyTest() {
 
         val response = target("$baseUrl/vehicle/$uuid").request().get()
         println(response.status)
-        val i = TestData.getVehicle()
         val responseJson = JSONObject(response.readEntity(String::class.java))
-        println(responseJson)
+        assertNotNull(responseJson)
+        println("response  uuid : ${responseJson.get("uuid").toString()}")
+
+    }
+
+    @Test
+    fun return_list_of_all_vehicles(){
+
+        val response = target("$baseUrl/vehicles").request().get()
+        print(response)
 
     }
 

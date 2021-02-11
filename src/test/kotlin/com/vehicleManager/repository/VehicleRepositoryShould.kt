@@ -9,10 +9,12 @@ import com.vehicleManager.exception.DuplicateRegistrationNumberException
 import com.vehicleManager.exception.vehicleExceptions.VehicleNotFoundException
 import com.vehicleManager.helper.TestData
 import com.vehicleManager.models.Vehicle
+import com.vehicleManager.service.VehicleService
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
+import org.mockito.Mockito.mock
 import java.util.*
 
 class VehicleRepositoryShould {
@@ -26,6 +28,7 @@ class VehicleRepositoryShould {
 
     @Before
     fun configure() {
+
         startMongoDb()
         val mongoClient = MongoClient("localhost", embeddedMongoDb.port)
         database = mongoClient.getDatabase("vehicle")
@@ -48,7 +51,8 @@ class VehicleRepositoryShould {
     @Test
     fun create_New_Vehicle_With_New_RegistrationNumber() {
         var vehicle = TestData.getVehicle()
-        createNewVehicle(vehicle)
+        var vehicleAfterCreation = createNewVehicle(vehicle)
+        assertNotNull(vehicleAfterCreation)
     }
 
     @Test
@@ -78,5 +82,9 @@ class VehicleRepositoryShould {
             assert(vehicle.getRegistrationNumber() == vehicle2.getRegistrationNumber())
         }
     }
+
+
+
+
 
 }

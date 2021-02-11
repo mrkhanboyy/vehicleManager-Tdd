@@ -22,5 +22,9 @@ object TestData {
         return objectMapper.readValue(createVehicleRequest(), Vehicle::class.java)
     }
 
+    fun getNullVehicle(): Vehicle? {
+        return null
+    }
+
 
 }

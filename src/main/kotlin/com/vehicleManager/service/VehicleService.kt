@@ -17,7 +17,7 @@ class VehicleService @Inject constructor(private val vehicleRepo: VehicleReposit
     }
 
 
-    private fun validateVehicelData(vehicle: Vehicle){
+    private fun validateVehicelData(vehicle: Vehicle) {
 
         if(vehicle == null){
             throw VehicleNotFoundException("Vehcle cannot be null")
