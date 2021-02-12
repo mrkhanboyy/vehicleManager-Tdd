@@ -1,4 +1,4 @@
-package com.vehicleManager.exception
+package com.vehicleManager.exception.mongoException
 
 class MongoDbException(s: String) : RuntimeException() {
 

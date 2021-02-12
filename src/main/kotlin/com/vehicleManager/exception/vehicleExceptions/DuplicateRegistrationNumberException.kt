@@ -1,4 +1,4 @@
-package com.vehicleManager.exception
+package com.vehicleManager.exception.vehicleExceptions
 
 import com.vehicleManager.exception.vehicleExceptions.VehicleException
 

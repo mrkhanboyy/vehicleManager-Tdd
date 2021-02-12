@@ -45,8 +45,13 @@ class VehicleService @Inject constructor(private val vehicleRepo: VehicleReposit
     }
 
 
-    fun updateVehicle(vehicle: Vehicle?): Vehicle {
-        return vehicleRepo.updateVehicle(vehicle)
+    fun updateVehicle(vehicle: Vehicle?): Vehicle? {
+
+        var updatedVehicle = vehicleRepo.updateVehicle(vehicle)
+        if(updatedVehicle == null){
+            throw VehicleNotFoundException("vehicle not found with uuid : ${vehicle?.getUuid()} ")
+        }
+        return updatedVehicle
 
     }
 

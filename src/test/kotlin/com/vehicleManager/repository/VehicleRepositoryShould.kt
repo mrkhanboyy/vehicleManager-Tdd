@@ -5,17 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fretron.vehicleManager.utils.EmbeddedMongoDb
 import com.mongodb.MongoClient
 import com.mongodb.client.MongoDatabase
-import com.vehicleManager.exception.DuplicateRegistrationNumberException
+import com.vehicleManager.exception.vehicleExceptions.DuplicateRegistrationNumberException
 import com.vehicleManager.exception.vehicleExceptions.VehicleNotFoundException
 import com.vehicleManager.helper.TestData
 import com.vehicleManager.models.Vehicle
-import com.vehicleManager.service.VehicleService
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
-import org.mockito.Mockito.mock
-import java.lang.Exception
 import java.util.*
 
 class VehicleRepositoryShould {
@@ -112,19 +109,16 @@ class VehicleRepositoryShould {
 
     @Test
     fun return_vehicle_after_update(){
+
         val oldVehicle = TestData.getVehicle()
-        val updatedVehicle = TestData.getUpdatedVehicle()
-
-        assertTrue(oldVehicle.getUuid() == updatedVehicle.getUuid())
-        assertTrue(oldVehicle.getDriverName() != updatedVehicle.getDriverName())
-
-        assertThrows(VehicleNotFoundException::class.java) {
-            vehicleRepository.updateVehicle(oldVehicle)
-        }
-
+        val newVehicle = TestData.getUpdatedVehicle()
+        assertTrue(oldVehicle.getUuid() == newVehicle.getUuid())
+        assertTrue(oldVehicle.getDriverName() != newVehicle.getDriverName())
         createNewVehicle(oldVehicle)
-        val vehicleAfterUpdate = vehicleRepository.updateVehicle(updatedVehicle)
-        assert(vehicleAfterUpdate.getDriverName() == oldVehicle.getDriverName())
+        val vehicleAfterUpdate = vehicleRepository.updateVehicle(newVehicle)
+        assertTrue(vehicleAfterUpdate?.getUuid() != null)
+        assertTrue((vehicleAfterUpdate?.getUuid() == oldVehicle.getUuid()))
+        assert(vehicleAfterUpdate?.getDriverName() != oldVehicle.getDriverName())
 
         }
 

@@ -4,6 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import com.vehicleManager.di.component.DaggerVehicleAppTestComponent
 import com.vehicleManager.helper.TestData
+import com.vehicleManager.models.Vehicle
 import com.vehicleManager.service.VehicleService
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.test.JerseyTest
@@ -38,6 +39,7 @@ class VehicleResourceShould : JerseyTest() {
         whenever(vehicleService.getVehicleById(any())).thenReturn(TestData.getVehicle())
         whenever(vehicleService.getALlVehicles()).thenReturn(listOf(TestData.getVehicle()))
         whenever(vehicleService.deleteVehicle(any())).thenReturn(TestData.getVehicle())
+        whenever(vehicleService.updateVehicle(any())).thenReturn(TestData.getUpdatedVehicle())
     }
 
     @Test
@@ -82,16 +84,19 @@ class VehicleResourceShould : JerseyTest() {
         assertNotNull(response.entity)
         val responseJson = JSONObject(response.readEntity(String::class.java))
         assertNotNull(responseJson)
-        println("response  uuid : ${responseJson.get("uuid").toString()}")
+        println("response  uuid : ${responseJson.get("uuid")}")
 
     }
 
     @Test
-    fun return_200_after_updating_vehicle(){
-        var vehicle = TestData.updateVehicleRequest()
-        val response = target("$baseUrl/vehicle").request().put(Entity.entity(vehicle, MediaType.APPLICATION_JSON))
-        assertTrue(response.status == 200)
+    fun return_200_after_updating_vehicle() {
 
+            var request = TestData.updateVehicleRequest()
+            val vehicle = TestData.getUpdatedVehicle()
+            val response = target("$baseUrl/vehicle").request().put(Entity.entity(request, MediaType.APPLICATION_JSON))
+            assertTrue(response.status == 200)
+            var responseJson = JSONObject(response.readEntity(String::class.java))
+            assert(vehicle.getDriverName() == responseJson.get("driverName"))
 
     }
 

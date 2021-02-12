@@ -2,21 +2,25 @@ package com.vehicleManager.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mongodb.client.MongoDatabase
-import com.vehicleManager.exception.DuplicateRegistrationNumberException
+import com.vehicleManager.exception.vehicleExceptions.DuplicateRegistrationNumberException
 import com.vehicleManager.models.Vehicle
 import org.bson.Document
 import javax.inject.Inject
 import com.mongodb.BasicDBObject
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.FindOneAndUpdateOptions
+import com.mongodb.client.model.ReturnDocument
 import com.mongodb.util.JSON
-import com.vehicleManager.exception.MongoDbException
+import com.vehicleManager.exception.mongoException.MongoDbException
 import com.vehicleManager.exception.vehicleExceptions.VehicleNotFoundException
+import org.bson.conversions.Bson
 
 
 class VehicleRepository @Inject constructor(
     private val database: MongoDatabase,
     private val objectMapper: ObjectMapper
 ) {
+
     private val collectionName: String = "vehicle"
 
 
@@ -72,6 +76,7 @@ class VehicleRepository @Inject constructor(
 
     @Throws(MongoDbException::class)
     fun deleteVehicleById(uuid: String): Vehicle? {
+
         var vehicle: Vehicle? = getVehicleById(uuid)
         val collection = database.getCollection(collectionName)
         var collectioN = collection.deleteOne(Filters.eq("_id", uuid))
@@ -83,16 +88,17 @@ class VehicleRepository @Inject constructor(
 
     }
 
-    fun updateVehicle(vehicle: Vehicle?): Vehicle {
-        var collection = database.getCollection(collectionName)
-        var document = collection.findOneAndDelete(Filters.eq("_id", vehicle?.getUuid()))
-        if(document == null){
-            throw VehicleNotFoundException("Vehicle Not Found  with id :: ${vehicle?.getUuid()}")
-        }
-        document.remove("_id")
-        val json = JSON.serialize(document)
-        return objectMapper.readValue(json, Vehicle::class.java)
-    }
+    fun updateVehicle(vehicle: Vehicle?): Vehicle? {
 
+    var collection = database.getCollection(collectionName)
+    val filter = Filters.eq("_id", vehicle?.getUuid())
+    val toUpdate: Bson = Document("\$set", Document.parse(vehicle.toString()))
+    var document: Document? = collection.findOneAndUpdate(
+        filter, toUpdate, FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+    ) ?: return null
+        document?.remove("_id")
+    val json = JSON.serialize(document)
+    return objectMapper.readValue(json, Vehicle::class.java)
+    }
 
 }

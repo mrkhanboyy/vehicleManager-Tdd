@@ -104,9 +104,13 @@ class VehicleServiceShould {
     @Test
     fun return_updated_vehicle_after_update_or_throw(){
 
-        var vehicle = TestData.getUpdatedVehicle()
+        var vehicle = TestData.getVehicle()
         var updatedVehicle = vehicleRepository.updateVehicle(vehicle)
-        assertFalse(vehicle.getDriverName() != updatedVehicle.getDriverName())
+        assertTrue(vehicle.getDriverName() != updatedVehicle?.getDriverName())
+
+        whenever(vehicleRepository.updateVehicle(any())).thenReturn(null)
+          var result =  vehicleRepository.updateVehicle(vehicle)
+        assertNull(result)
 
 
     }

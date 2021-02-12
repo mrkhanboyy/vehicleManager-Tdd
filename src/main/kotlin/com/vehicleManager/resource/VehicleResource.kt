@@ -55,14 +55,8 @@ private val objectMapper: ObjectMapper) {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun updateVehicle(request: String): Response{
-        val vehicle: Vehicle =  vehicleService.updateVehicle(objectMapper.readValue(request,Vehicle::class.java))
-        return Response.ok().build()
+        val vehicle: Vehicle? =  vehicleService.updateVehicle(objectMapper.readValue(request, Vehicle::class.java))
+        return Response.ok(vehicle.toString()).build()
     }
-
-
-
-
-
-
 
 }

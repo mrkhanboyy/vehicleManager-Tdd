@@ -1,26 +1,32 @@
-com/vehicleManager/di/components/DaggerVehicleAppComponent.java
- com.vehicleManager.di.components.DaggerVehicleAppComponent
- com.vehicleManager.di.components.DaggerVehicleAppComponent$1
- com.vehicleManager.di.components.DaggerVehicleAppComponent$Builder
+com/vehicleManager/exception/exceptionMapper/MongoExceptionMapper_Factory.java
+ com.vehicleManager.exception.exceptionMapper.MongoExceptionMapper_Factory
 com/vehicleManager/service/VehicleService_Factory.java
  com.vehicleManager.service.VehicleService_Factory
 com/vehicleManager/di/modules/MapperModule_ProvidesObjectMapperFactory.java
  com.vehicleManager.di.modules.MapperModule_ProvidesObjectMapperFactory
-com/vehicleManager/repository/VehicleRepository_Factory.java
- com.vehicleManager.repository.VehicleRepository_Factory
-com/vehicleManager/di/modules/ConfigModule_ProvidePortFactory.java
- com.vehicleManager.di.modules.ConfigModule_ProvidePortFactory
 com/vehicleManager/models/Vehicle.java
  com.vehicleManager.models.Vehicle
  com.vehicleManager.models.Vehicle$1
  com.vehicleManager.models.Vehicle$Builder
 com/vehicleManager/di/modules/HttpModule_ServerFactory.java
  com.vehicleManager.di.modules.HttpModule_ServerFactory
+com/vehicleManager/di/modules/DatabaseModule_ProvidesMongoDatabaseFactory.java
+ com.vehicleManager.di.modules.DatabaseModule_ProvidesMongoDatabaseFactory
+com/vehicleManager/di/components/DaggerVehicleAppComponent.java
+ com.vehicleManager.di.components.DaggerVehicleAppComponent
+ com.vehicleManager.di.components.DaggerVehicleAppComponent$1
+ com.vehicleManager.di.components.DaggerVehicleAppComponent$Builder
+com/vehicleManager/exception/exceptionMapper/VehicleExceptionMapper_Factory.java
+ com.vehicleManager.exception.exceptionMapper.VehicleExceptionMapper_Factory
+com/vehicleManager/repository/VehicleRepository_Factory.java
+ com.vehicleManager.repository.VehicleRepository_Factory
+com/vehicleManager/di/modules/ConfigModule_ProvidePortFactory.java
+ com.vehicleManager.di.modules.ConfigModule_ProvidePortFactory
+com/vehicleManager/models/ErrorResponse.java
+ com.vehicleManager.models.ErrorResponse
 com/vehicleManager/resource/VehicleResource_Factory.java
  com.vehicleManager.resource.VehicleResource_Factory
 com/vehicleManager/di/modules/HttpModule_ProvideResourceFactory.java
  com.vehicleManager.di.modules.HttpModule_ProvideResourceFactory
 com/vehicleManager/di/modules/ConfigModule_ProvideHostFactory.java
  com.vehicleManager.di.modules.ConfigModule_ProvideHostFactory
-com/vehicleManager/di/modules/DatabaseModule_ProvidesMongoDatabaseFactory.java
- com.vehicleManager.di.modules.DatabaseModule_ProvidesMongoDatabaseFactory
